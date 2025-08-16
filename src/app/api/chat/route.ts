@@ -1,4 +1,3 @@
-import { schemaPrompt, sqlPrompt } from "@/lib/prompts";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { generateObject, streamText } from "ai";
 
@@ -31,6 +30,22 @@ const schema_generation_schema = z.object({
   ),
 });
 
+const SCHEMA_PROMPT_URL = process.env.SCHEMA_PROMPT_URL || "";
+const SQL_PROMPT_URL = process.env.SQL_PROMPT_URL || "";
+
+async function getPrompt(type: string) {
+  switch (type) {
+    case "schema":
+      const schemaRes = await fetch(SCHEMA_PROMPT_URL);
+      return schemaRes.text();
+    case "sql":
+      const sqlRes = await fetch(SQL_PROMPT_URL);
+      return sqlRes.text();
+    default:
+      return "";
+  }
+}
+
 export async function POST(req: Request) {
   const body = await req.json();
   const user_description = body.description;
@@ -49,7 +64,8 @@ export async function POST(req: Request) {
   }
 
   if (promptType === "schema") {
-    const schemaGenerationPrompt = schemaPrompt(user_description);
+    const schemaGenerationPrompt = await getPrompt("schema");
+    schemaGenerationPrompt.replace("{{input}}", user_description);
     try {
       const { object } = await generateObject({
         model: google("gemini-2.5-flash"),
@@ -94,7 +110,9 @@ export async function POST(req: Request) {
       );
     }
 
-    const queryPrompt = sqlPrompt(user_description, db_schema);
+    const queryPrompt = await getPrompt("sql");
+    queryPrompt.replace("{{dbSchema}}", db_schema);
+    queryPrompt.replace("{{input}}", user_description);
 
     try {
       const { textStream } = await streamText({

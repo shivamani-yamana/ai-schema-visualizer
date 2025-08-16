@@ -1,12 +1,5 @@
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  Link,
-  Button,
-} from "@heroui/react";
-import { FaGithub } from "react-icons/fa6";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react";
+import GitHubButton from "react-github-btn";
 
 export default function App() {
   return (
@@ -16,10 +9,16 @@ export default function App() {
       </NavbarBrand>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Button as={Link} href="#" variant="flat">
-            <FaGithub />
-            Github
-          </Button>
+          <GitHubButton
+            href="https://github.com/shivamani-yamana/ai-schema-visualizer"
+            data-color-scheme="no-preference: dark; light: light; dark: dark;"
+            data-icon="octicon-star"
+            data-size="large"
+            data-show-count="true"
+            aria-label="Star shivamani-yamana/ai-schema-visualizer on GitHub"
+          >
+            Star
+          </GitHubButton>
         </NavbarItem>
       </NavbarContent>
     </Navbar>
