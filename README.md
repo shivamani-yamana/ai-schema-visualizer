@@ -4,6 +4,14 @@ SchemaIQ is an AI-powered database schema generator and SQL query assistant buil
 
 ---
 
+## Tagline
+
+**Design powerful databases  
+at  
+AI speed**
+
+---
+
 ## Features
 
 - **AI Schema Generation:**  
@@ -94,6 +102,10 @@ Deploy easily on [Vercel](https://vercel.com/new) for best performance and integ
 - `src/lib/prompts.ts` – (Optional) Prompt template functions if not using remote storage.
 - `src/store/useAppStore.ts` – Zustand store for app state and chat history.
 - `src/app/api/chat/route.ts` – API route for AI schema and SQL generation.
+- `src/components/Navbar.tsx` – Top navigation bar with GitHub link.
+- `src/components/ui/aurora-background.tsx` – Aurora background effect.
+- `src/components/ui/cover.tsx` – Animated cover effect for tagline.
+- `src/components/ui/sparkles.tsx` – Sparkle particle background.
 
 ---
 
@@ -171,4 +183,4 @@ MIT
 
 ## Contact
 
-For questions or support, open an issue or contact
+For questions or support, open an issue or contact the

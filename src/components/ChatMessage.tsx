@@ -40,7 +40,6 @@ export default function ChatMessage({ id }: { id: number }) {
                   className="bg-white rounded-full w-2 h-2 animate-bounce"
                   style={{ animationDelay: "0.4s" }}
                 />
-                <span className="ml-2">AI is responding</span>
               </span>
             ) : type === "sql" ? (
               <Snippet
