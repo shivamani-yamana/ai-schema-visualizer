@@ -1,26 +1,70 @@
 @import "tailwindcss";
+@plugin './hero.js';
+@source '../../src/**/*.{js,ts,jsx,tsx}';
+@source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Scrollbar styling for the textarea */
+.textarea-scrollbar {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #4b5563 transparent; /* Firefox */
+  scrollbar-gutter: stable;
+}
+.textarea-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.textarea-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #374151; /* gray-700 */
+  border-radius: 9999px;
+}
+.textarea-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #4b5563; /* gray-600 */
+}
+.textarea-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --animate-first: moveVertical 30s ease infinite;
+  --animate-second: moveInCircle 20s reverse infinite;
+  --animate-third: moveInCircle 40s linear infinite;
+  --animate-fourth: moveHorizontal 40s ease infinite;
+  --animate-fifth: moveInCircle 20s ease infinite;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @keyframes moveHorizontal {
+    0% {
+      transform: translateX(-50%) translateY(-10%);
+    }
+    50% {
+      transform: translateX(50%) translateY(10%);
+    }
+    100% {
+      transform: translateX(-50%) translateY(-10%);
+    }
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @keyframes moveInCircle {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(180deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes moveVertical {
+    0% {
+      transform: translateY(-50%);
+    }
+    50% {
+      transform: translateY(50%);
+    }
+    100% {
+      transform: translateY(-50%);
+    }
+  }
 }
