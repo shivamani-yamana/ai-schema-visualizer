@@ -44,8 +44,7 @@ Create a `.env` file in the project root and add your Google Generative AI API k
 
 ```
 GOOGLE_GENERATIVE_AI_API_KEY=your-google-api-key
-SCHEMA_PROMPT_URL=https://your-storage-or-pastebin-url/schemaPrompt.txt
-SQL_PROMPT_URL=https://your-storage-or-pastebin-url/sqlPrompt.txt
+MASTER_PROMPT_URL = your-prompt-txt-file-url
 ```
 
 ### 3. **Prompt Templates (Recommended for Production)**
