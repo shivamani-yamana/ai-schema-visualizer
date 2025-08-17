@@ -4,59 +4,48 @@ import { create } from "zustand";
 
 export type messageItem = {
   id: string;
-  type: "schema" | "sql";
+  type: "schema_visualization" | "sql_query" | "conversational";
   userInput: string;
-  dbSchema?: string;
   result: schemaType | string;
   isLoading: boolean;
 };
 
 interface AppState {
-  mode: "schema" | "sql";
   userInput: string;
-  dbSchemaInput: string;
   isLoading: boolean;
   history: messageItem[];
 
-  setMode: (mode: "schema" | "sql") => void;
   setUserInput: (input: string) => void;
-  setDbSchemaInput: (input: string) => void;
 
   handleSubmit: () => Promise<void>;
 }
 
 export const useAppStore = create<AppState>((set, get) => ({
-  mode: "schema",
   userInput: "",
-  dbSchemaInput: "",
   isLoading: false,
   history: [],
 
-  setMode: (mode) => set({ mode }),
   setUserInput: (input) => set({ userInput: input }),
-  setDbSchemaInput: (input) => set({ dbSchemaInput: input }),
 
   handleSubmit: async () => {
-    const { mode, userInput, dbSchemaInput } = get();
-    if (!userInput) {
-      return;
-    }
+    const { userInput } = get();
 
-    const newMessageId = uuidv4();
+    if (!userInput) return;
 
-    const newMessageItem: messageItem = {
+    const newMessageId: string = uuidv4();
+
+    const newMessage: messageItem = {
       id: newMessageId,
-      type: mode,
+      type: "conversational",
       userInput: userInput,
-      dbSchema: dbSchemaInput,
       result: "",
       isLoading: true,
     };
 
     set((state) => ({
-      isLoading: true,
-      history: [...state.history, newMessageItem],
+      history: [...state.history, newMessage],
       userInput: "",
+      isLoading: true,
     }));
 
     try {
@@ -64,60 +53,54 @@ export const useAppStore = create<AppState>((set, get) => ({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          promptType: mode,
-          description: userInput,
-          db_schema: dbSchemaInput,
+          userInput: userInput,
         }),
       });
 
-      if (!response.ok) throw new Error("API request failed");
-
-      let finalResult: schemaType | string = "";
-
-      if (mode === "schema") {
-        const data = await response.json();
-        finalResult = data.schema;
-      } else {
-        const reader = response.body!.getReader();
-        const decoder = new TextDecoder();
-
-        let streamedText = "";
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          streamedText += decoder.decode(value);
-
-          set((state) => ({
-            history: state.history.map((item) =>
-              item.id === newMessageId
-                ? {
-                    ...item,
-                    result: streamedText,
-                  }
-                : item
-            ),
-          }));
-        }
-
-        finalResult = streamedText;
+      if (!response.ok) {
+        throw new Error("API request failed");
       }
+
+      const res = await response.json();
+
+      let finalResult: schemaType | string;
+
+      switch (res.intent) {
+        case "schema_visualization":
+          finalResult = res.data as schemaType;
+          break;
+        case "sql_query":
+          finalResult = res.data.query as string;
+          break;
+        case "conversational":
+          finalResult = res.data.response as string;
+          break;
+        default:
+          throw new Error("Invalid format received from API");
+      }
+
       set((state) => ({
         history: state.history.map((item) =>
           item.id === newMessageId
-            ? { ...item, result: finalResult, isLoading: false }
+            ? {
+                ...item,
+                type: res.intent,
+                result: finalResult,
+                isLoading: false,
+              }
             : item
         ),
-        isLoading: false,
       }));
-
-      console.log(finalResult);
-    } catch (err) {
-      console.error("An error occured during fetch:", err);
-
+    } catch (error) {
+      console.error("Failed to handle submit:", error);
       set((state) => ({
         history: state.history.map((item) =>
           item.id === newMessageId
-            ? { ...item, result: "An error occurred.", isLoading: false }
+            ? {
+                ...item,
+                result: "An error occurred. Please try again.",
+                isLoading: false,
+              }
             : item
         ),
       }));

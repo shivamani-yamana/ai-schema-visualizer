@@ -41,7 +41,7 @@ export default function ChatMessage({ id }: { id: number }) {
                   style={{ animationDelay: "0.4s" }}
                 />
               </span>
-            ) : type === "sql" ? (
+            ) : type === "sql_query" ? (
               <Snippet
                 symbol=""
                 tooltipProps={{
@@ -54,6 +54,8 @@ export default function ChatMessage({ id }: { id: number }) {
               >
                 {result as string}
               </Snippet>
+            ) : type === "conversational" ? (
+              <p>{result as string}</p>
             ) : (
               <SchemaVisualizer data={result as schemaType} />
             )}

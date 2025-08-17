@@ -18,3 +18,8 @@ export type schemaType = {
     to: string;
   }[];
 };
+
+export type AiApiResponse = {
+  intent: "schema_visualization" | "sql_query" | "conversational";
+  data: schemaType | { query: string } | { response: string };
+};
