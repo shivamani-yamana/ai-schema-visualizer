@@ -4,14 +4,6 @@ SchemaIQ is an AI-powered database schema generator and SQL query assistant buil
 
 ---
 
-## Tagline
-
-**Design powerful databases  
-at  
-AI speed**
-
----
-
 ## Features
 
 - **AI Schema Generation:**  
@@ -52,8 +44,7 @@ Create a `.env` file in the project root and add your Google Generative AI API k
 
 ```
 GOOGLE_GENERATIVE_AI_API_KEY=your-google-api-key
-SCHEMA_PROMPT_URL=https://your-storage-or-pastebin-url/schemaPrompt.txt
-SQL_PROMPT_URL=https://your-storage-or-pastebin-url/sqlPrompt.txt
+MASTER_PROMPT_URL = your-prompt-txt-file-url
 ```
 
 ### 3. **Prompt Templates (Recommended for Production)**
@@ -73,16 +64,6 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
----
-
-## Usage
-
-1. **Describe your app or data needs** in the prompt box.
-2. **Select "Schema"** to generate a database schema, or **"Query"** to generate an SQL query.
-3. For SQL queries, **add your database schema** using the "+" button.
-4. **Submit your prompt**. The AI will respond with a schema or SQL query.
-5. **Visualize the schema** by clicking "View Schema" in the chat.
-6. **Copy SQL commands** using the copy button next to each snippet.
 
 ---
 
