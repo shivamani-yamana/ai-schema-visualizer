@@ -4,14 +4,6 @@ SchemaIQ is an AI-powered database schema generator and SQL query assistant buil
 
 ---
 
-## Tagline
-
-**Design powerful databases  
-at  
-AI speed**
-
----
-
 ## Features
 
 - **AI Schema Generation:**  
