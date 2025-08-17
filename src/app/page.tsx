@@ -20,7 +20,7 @@ export default function Home() {
                 {history.length === 0 ? (
                   <GreetingText />
                 ) : (
-                  history.map((message, idx) => {
+                  history.map((_, idx) => {
                     return <ChatMessage key={idx} id={idx} />;
                   })
                 )}

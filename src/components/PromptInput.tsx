@@ -15,6 +15,7 @@ import {
 } from "@heroui/react";
 import { ArrowUp } from "lucide-react";
 import { useAppStore } from "@/store/useAppStore";
+import SpeechToText from "./SpeechToText";
 // import { FaPlus } from "react-icons/fa6";
 
 export default function PromptInput() {
@@ -34,7 +35,7 @@ export default function PromptInput() {
           value={userInput}
           onValueChange={setUserInput}
           onKeyDown={handleKeyPress}
-          placeholder="Enter a prompt here"
+          placeholder="Describe your app, ask for a schema, or request an SQL query..."
           aria-label="Prompt input"
           variant="bordered"
           minRows={1}
@@ -48,7 +49,7 @@ export default function PromptInput() {
               "textarea-scrollbar overflow-y-auto resize-none text-base bg-transparent",
           }}
         />
-        {/* <ModeSelection /> */}
+        <SpeechToText />
         {/* Send Button */}
         <Button
           isIconOnly
