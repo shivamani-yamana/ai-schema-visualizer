@@ -64,16 +64,6 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
----
-
-## Usage
-
-1. **Describe your app or data needs** in the prompt box.
-2. **Select "Schema"** to generate a database schema, or **"Query"** to generate an SQL query.
-3. For SQL queries, **add your database schema** using the "+" button.
-4. **Submit your prompt**. The AI will respond with a schema or SQL query.
-5. **Visualize the schema** by clicking "View Schema" in the chat.
-6. **Copy SQL commands** using the copy button next to each snippet.
 
 ---
 
