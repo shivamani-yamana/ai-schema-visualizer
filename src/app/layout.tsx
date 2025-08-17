@@ -8,6 +8,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <title>SchemaIQ</title>
+      </head>
       <body className="bg-background text-foreground">
         <Providers>{children}</Providers>
       </body>

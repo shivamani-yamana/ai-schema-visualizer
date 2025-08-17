@@ -14,13 +14,16 @@ export default function Home() {
       <AuroraBackground>
         <div className="z-10 relative w-full h-full pointer-events-auto">
           <Navbar />
-          <main className="flex flex-col justify-center items-center backdrop-blur-lg w-full h-[calc(100vh-4rem)]">
+          <main className="flex flex-col justify-center items-center backdrop-blur-lg w-full h-[calc(100vh-8rem)]">
             <div className="flex flex-1 justify-center items-start p-10 w-full h-full">
-              <div className="flex sm:flex-col items-center sm:items-stretch gap-2 sm:gap-4 w-full max-w-3xl h-full">
-                {history.length === 0 && <GreetingText />}
-                {history.map((message, idx) => {
-                  return <ChatMessage key={idx} id={idx} />;
-                })}
+              <div className="flex sm:flex-col items-center sm:items-stretch gap-2 sm:gap-4 pt-6 w-full max-w-3xl h-full overflow-auto custom-scrollbar">
+                {history.length === 0 ? (
+                  <GreetingText />
+                ) : (
+                  history.map((message, idx) => {
+                    return <ChatMessage key={idx} id={idx} />;
+                  })
+                )}
               </div>
             </div>
             <PromptInput />
